@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifra de Vigenère</title>
+</head>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    #cipherForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    p {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    #resultado {
+        font-weight: bold;
+        color: #007BFF;
+    }
+</style>
+</head>
+
+<body>
+
+    <form id="cipherForm">
+        <h2>Cifra de Vègenere</h2>
+        <label for="mensagem">Mensagem:</label>
+        <input type="text" id="mensagem" name="mensagem" required>
+
+        <label for="chave">Chave:</label>
+        <input type="text" id="chave" name="chave" required>
+
+        <button type="button" onclick="cifra_vigenere()">Encriptar</button>
+    </form>
+
+    <p>Mensagem Encriptada: <span id="resultado"></span></p>
+
+</body>
+
+</html>
+
+</html>
+
+<script>
+
+    function mod(valor, modulo) {
+        resultado = valor % modulo;
+
+        if (resultado < 0) {
+            r += modulo;
+        }
+        return modulo;
+    }
+
+    function cifra_vigenere() {
+        arrayChave = [];
+        let encMessage = "";
+
+        let chaveIndex = 0;
+        let chaveArray = [];
+
+        const codeA = 'A'.codePointAt(0);
+        const codeZ = 'Z'.codePointAt(0);
+
+        let mensagem = document.getElementById('mensagem').value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+        let chave = document.getElementById('chave').value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+
+        for (let letraChave of chave) {
+            arrayChave.push(letraChave.codePointAt(0) - codeA);
+        }
+
+        while (arrayChave.length < mensagem.length) {
+            arrayChave = arrayChave.concat(arrayChave);
+        }
+
+        arrayChave = arrayChave.slice(0, mensagem.length);
+
+
+        for (let letra of mensagem) {
+            let code = letra.codePointAt(0);
+
+            if (code >= codeA && code <= codeZ) {
+                let letraChave = arrayChave[chaveIndex];
+
+                code -= codeA;
+                code = (code + letraChave) % 26;
+                code += codeA;
+
+                chaveIndex = (chaveIndex + 1) % arrayChave.length;
+            }
+
+            encMessage += String.fromCodePoint(code);
+        }
+
+        document.getElementById('resultado').innerHTML = encMessage;
+    }
+
+</script>
