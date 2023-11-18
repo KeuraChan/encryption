@@ -89,13 +89,9 @@
 
 <script>
 
-    function mod(valor, modulo) {
-        resultado = valor % modulo;
 
-        if (resultado < 0) {
-            r += modulo;
-        }
-        return modulo;
+    function mod(n, m) {
+        return ((n % m) + m) % m;
     }
 
     function cifra_vigenere() {
@@ -129,10 +125,10 @@
                 let letraChave = arrayChave[chaveIndex];
 
                 code -= codeA;
-                code = (code + letraChave) % 26;
+                code = mod(code + letraChave, 26);
                 code += codeA;
 
-                chaveIndex = (chaveIndex + 1) % arrayChave.length;
+                chaveIndex = mod(chaveIndex + 1 , arrayChave.length);
             }
 
             encMessage += String.fromCodePoint(code);
