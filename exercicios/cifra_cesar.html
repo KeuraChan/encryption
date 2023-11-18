@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cifra de Cesar</title>
 </head>
+
 <style>
     body {
         font-family: 'Arial', sans-serif;
@@ -66,7 +67,6 @@
 <body>
 
     <form id="cipherForm">
-        <h2>Cifra de César</h2>
         <label for="mensagem">Mensagem:</label>
         <input type="text" id="mensagem" name="mensagem" required>
 
@@ -83,14 +83,8 @@
 </html>
 
 <script>
-
-    function mod(valor, modulo) {
-        resultado = valor % modulo;
-
-        if (resultado < 0) {
-            r += modulo;
-        }
-        return modulo;
+    function mod(n, m) {
+        return ((n % m) + m) % m;
     }
 
     function cifra_cesar() {
@@ -105,20 +99,18 @@
 
         for (let letra of mensagem) {
             let code = letra.codePointAt(0);
-        }
 
-        if (code >= codeA && code <= codeZ) {
-            code -= codeA;
-            code = mod((code + chave), 26);
-            code += codeA
-        }
+            if (code >= codeA && code <= codeZ) {
+                code -= codeA;
+                code = mod(code + chave, 26);
+                code += codeA
+            }
 
-        encMessage += String.fromCodePoint(code);
+            encMessage += String.fromCodePoint(code);
+        }
 
         document.getElementById('resultado').innerHTML = encMessage;
     }
-
-
 
 
 </script>
