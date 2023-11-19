@@ -21,9 +21,11 @@
     }
 
     .content {
-        min-width: 400px;
+
+        margin: 0 auto;
+        min-width: 300px;
         max-width: 600px;
-        width: auto;
+        width: 60%;
         padding: 30px;
         background-color: #fff;
         border-radius: 8px;
@@ -63,6 +65,7 @@
 
     button {
         width: 40%;
+        min-width: 160px;
         background-color: #007BFF;
         color: #fff;
         padding: 10px 20px;
@@ -88,14 +91,15 @@
     }
 
     .decript {
+        margin: 0 auto;
         width: 40%;
+        min-width: 300px;
         min-height: 300px;
         margin-top: 20px;
         text-align: center;
         background-color: #fff;
         margin-bottom: 60px;
         border-radius: 15px;
-        box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
         padding: 30px;
     }
 
@@ -130,6 +134,7 @@
             </div>
         </form>
     </div>
+    
     <div class="decript">
         <h3>Chute de Decriptacao:</h3>
         <span id="resultado"></span>
@@ -153,7 +158,6 @@
 
     function decifrar() {
 
-
         if (tentativa == 25) {
             tentativa = 0;
         }
@@ -161,7 +165,6 @@
         mensagemElemento.readOnly = 'true';
 
         mensagem = mensagemElemento.value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
-
 
         // Objeto para armazenar a contagem de cada letra
         let contagemLetras = {};
@@ -184,14 +187,11 @@
             }
         }
 
-
         // PEGA AS LETRAS MAIS COMUNS E VAI COMPARAR COM A TENTATIVA
 
         let letrasComuns = ['A', 'E', 'O', 'R', 'I', 'N', 'D', 'M', 'U', 'T', 'C', 'L', 'P', 'V', 'G', 'H', 'Q', 'B', 'F', 'Z', 'J', 'X', 'K', 'W', 'Y'];
 
-
         console.log(letrasComuns[tentativa]);
-
 
         let letraTentativa = letrasComuns[tentativa];
 
@@ -202,14 +202,12 @@
         // Calcula a diferença entre os códigos Unicode
         let diferenca = Math.abs(codigoTentativa - codigoMaisFrequente);
 
-
         let chave = diferenca - (diferenca * 2);
 
         let desencMessage = "";
 
         for (let letra of mensagem) {
             let code = letra.codePointAt(0);
-
 
             if (code >= codeA && code <= codeZ) {
                 code -= codeA;
@@ -218,12 +216,9 @@
             }
 
             desencMessage += String.fromCodePoint(code);
-
         }
 
-
         document.getElementById('resultado').innerHTML = desencMessage;
-
 
         tentativa++;
         document.getElementById('tentativa').innerHTML = tentativa;
